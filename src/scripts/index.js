@@ -83,6 +83,7 @@ class App {
   stop() {
     if (this.timeInterval) clearInterval(this.timeInterval);
     if (this.moleInterval) clearInterval(this.moleInterval);
+    
     this.resetButton.classList.remove('hidden');
     this.startButton.innerText = "START";
     this.startButton.classList.add('success');
