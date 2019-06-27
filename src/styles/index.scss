@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap');
 
 :root {
-  --animation-time: 2s;
+  --animation-time: 1s;
 }
 
 body {
@@ -21,7 +21,11 @@ body {
     margin-right: 1em;
     padding-top: 2px;
     border-radius: 3px;
-    border: 1px solid green;
+    border: 2px solid #28a745;
+    &:hover {
+      background: #28a745;
+      color: #fff;
+    }
   }
 
   .grid {
@@ -79,11 +83,12 @@ body {
 
   .mole {
     height: 5em;
-    width: 3em;
+    width: 4em;
     border-radius: 20px 20px 2px 2px;
     background: #C66B35;
-    bottom: -5em;
-    transform: translateY(5em);
+    // bottom: -5em;
+    transform: translateY(4em);
+    transition: transform var(--animation-time) ease-in-out;
     // position: absolute;
   }
 
@@ -91,40 +96,21 @@ body {
     border-radius: 20px 20px 2px 2px;
     height: 5em;
     width: 4em;
+    bottom: 0;
+    transform: translateY(0em);
+    // transition: all var(--animation-time) ease-in-out;
+    transition: transform var(--animation-time) ease-in-out;
+
     // background: red;
     // bottom: 0;
     // transform: translateY(0);
     // transition: all 1s ease;
-    animation: flicker var(--animation-time) ease-in-out;
-    // animation-duration: $randomNumber + ms;
+    // animation: flicker var(--animation-time) ease-in-out;
+    // animation-duration: var(--animation-time);
   }
 
   .mole-hit {
     background: orange !important;
   }
 
-  .mole-hidden {
-    border-radius: 20px 20px 2px 2px;
-    height: 5em;
-    width: 3em;
-    bottom: -2em;
-    background: red;
-    bottom: -5em;
-    transform: translateY(5em);
-    transition: all 1s ease;
-  }
-
-  @keyframes flicker {
-    0% {
-      bottom: 0;
-    }
-    50% {
-      bottom: 5em;
-      transform: translateY(0);
-    }
-    100% {
-      bottom: 0em;
-      transform: translateY(5em);
-    }
-  }
 }

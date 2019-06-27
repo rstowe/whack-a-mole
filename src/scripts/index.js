@@ -5,49 +5,54 @@ class App {
     this.state = {
       isStarted: false,
       counterValue: 30,
+      activeMole: null,
+      score: 0,
     }
 
+    this.scoreboard = document.createElement('div');
     this.counter = document.createElement('div');
-    this.counter.innerText = this.state.counterValue;
-    this.counter.classList.add('counter');
+    this.startButton = document.createElement('button');
+    this.resetButton = document.createElement('button');
+
+    this.init();
     this.render();
   }
 
-  start(initialValue) {
-    let { counterValue, isStarted } = this.state;
+  init() {
+    this.startButton.innerText = "START";
+    this.resetButton.innerText = "RESET";
+    this.scoreboard.innerText = this.state.score;
+    this.counter.innerText = this.state.counterValue;
+    this.counter.classList.add('counter');
+  }
 
-    if (initialValue) {
-      counterValue = initialValue;
-    }
-
+  startMoleAppear() {
     this.moleInterval = setInterval(() => {
-      let moleNumber = Math.floor(Math.random() * 9) + 1;
-      let animationDuration = Math.floor(Math.random() * 2);
-      console.log('animationDuration', animationDuration);
+      let nextActiveMole = Math.floor(Math.random() * 9) + 1;
+      let animationDuration = Math.floor(Math.random() * (1200 - 400 + 1) + 400);
 
-      // if (moleNumber === 9 || moleNumber === 0) {
-      //   moleNumber = 5;
-      // }
+      while (this.state.activeMole === nextActiveMole) {
+        nextActiveMole = Math.floor(Math.random() * 9) + 1;
+      }
 
-      const mole = document.getElementById(`mole_${moleNumber}`);
-      mole.style.setProperty('--animation-time', moleNumber +'s');
-      console.log('mole', mole);
-
+      const mole = document.getElementById(`mole_${nextActiveMole}`);
+      mole.style.setProperty('--animation-time', animationDuration + 'ms');
       mole.classList.add('active-mole');
 
-      // setTimeout(() => {
-      //   mole.classList.remove('active-mole');
-      // }, 1000)
-      // mole.classList.remove('active-mole');
+      this.state.activeMole = nextActiveMole
 
-
+      setTimeout(() => {
+        mole.classList.remove('active-mole');
+      }, animationDuration)
     }, 1000)
+  }
 
-    // const mole = document.getElementById('mole_3');
-    // console.log('mole', mole);
-    // mole.classList.add('active-mole');
+  startCounter(initialValue) {
+    let { counterValue } = this.state;
 
-    this.interval = setInterval(() => {
+    if (initialValue) counterValue = initialValue;
+
+    this.timeInterval = setInterval(() => {
       if (counterValue === 0) {
         this.counter.innerText = counterValue--;
         this.stop();
@@ -57,58 +62,71 @@ class App {
     }, 1000);
   }
 
-  stop() {
-    if (this.interval) {
-      clearInterval(this.interval);
-    }
-    if (this.moleInterval) {
-      clearInterval(this.moleInterval);
-    }
+  start(initialValue) {
+    this.startMoleAppear();
+    this.startCounter(initialValue);
   }
 
-  renderStartButton() {
-    let buttonContainer = document.createElement('div');
-    let startButton = document.createElement('button');
-    startButton.innerText = "START";
+  resetGame() {
+    this.startButton.innerText = "START";
+    this.state.isStarted = false;
+  }
 
-    startButton.addEventListener('click', (event) => {
+  stop() {
+    if (this.timeInterval) clearInterval(this.timeInterval);
+    if (this.moleInterval) clearInterval(this.moleInterval);
+    this.resetGame();
+  }
+
+  renderControls() {
+    let buttonContainer = document.createElement('div');
+
+    this.startButton.addEventListener('click', () => {
       let { isStarted } = this.state;
 
       if (isStarted) {
         this.stop();
-        startButton.innerText = "start";
+        this.startButton.innerText = "START";
         this.state.isStarted = false;
       } else {
-        this.start(30);
-        startButton.innerText = "stop";
+        this.start();
+        this.startButton.innerText = "STOP";
         this.state.isStarted = true;
       }
     })
 
-    buttonContainer.appendChild(startButton);
+    buttonContainer.appendChild(this.startButton);
+    buttonContainer.appendChild(this.resetButton);
 
     return buttonContainer;
   }
 
   renderCounter() {
-    const startButton = this.renderStartButton();
+    const controls = this.renderControls();
     const title = document.createElement('h2');
+
     title.innerText = 'Whack-A-Mole';
-
     this.counterContainer = document.createElement('div');
-
     this.counterContainer.classList.add("counter-container");
     this.counterContainer.appendChild(this.counter);
     this.counterContainer.appendChild(title);
-    this.counterContainer.appendChild(startButton)
+    this.counterContainer.appendChild(controls);
+    this.counterContainer.appendChild(this.scoreboard);
+
     return this.counterContainer;
   }
 
   hitMole(moleHit) {
     const mole = moleHit.srcElement;
     console.log('you hit', moleHit.target);
-    // mole.classList.remove(moleHit.target.className)
+
+    this.scoreboard.innerText = this.state.score + 10;
+    this.state.score = this.state.score + 10;
     mole.classList.add('mole-hit');
+    console.log('this.state.score', this.state.score);
+    setTimeout(() => {
+      mole.classList.remove('mole-hit');
+    }, 200)
   }
 
   createTile(tileId) {
@@ -131,6 +149,16 @@ class App {
     tile.appendChild(hole);
 
     return tile;
+    // tile.innerHTML = `
+    //   <div class="tile">
+    //     <div class="hole">
+    //       <div class="mole" id="mole_${tileId}">
+    //       </div>
+    //     </div>
+    //   </div>
+    // `
+    //
+    // return tile;
   }
 
   renderGrid() {
