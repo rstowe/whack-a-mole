@@ -27,6 +27,7 @@ class Counter {
   }
 
   stop() {
+    console.log('stop');
     if (this.interval) {
       clearInterval(this.interval);
     }
