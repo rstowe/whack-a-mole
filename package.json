@@ -2,6 +2,7 @@
   "name": "whack-a-mole",
   "version": "1.0.0",
   "description": "Simple whack a mole game.",
+  "entry": "index.html",
   "scripts": {
     "build": "webpack --config webpack/webpack.config.prod.js  --colors",
     "start": "webpack-dev-server --open --config webpack/webpack.config.dev.js"
