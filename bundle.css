@@ -1,13 +1,43 @@
+@import url(https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap);
 :root {
-  --animation-time: 2s; }
+  --animation-time: 1s; }
 
 body {
+  height: 100%;
+  width: 100%;
   padding: 0;
   margin: 0; }
+  body h2 {
+    font-family: 'Rubik Mono One', sans-serif;
+    margin-left: 1em; }
+  body button {
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 0.8em;
+    height: 2em;
+    width: 8em;
+    cursor: pointer;
+    margin-right: 1em;
+    padding-top: 2px;
+    border-radius: 3px; }
+  body button.success {
+    border: 2px solid #28a745; }
+    body button.success:hover {
+      background: #28a745;
+      color: #fff; }
+  body button.danger {
+    border: 2px solid #dc3545; }
+    body button.danger:hover {
+      background: #dc3545;
+      color: #fff; }
+  body .hidden {
+    display: none; }
   body .grid {
+    height: 100%;
     width: 100%;
-    background-color: #048541;
-    border: 1px solid green;
+    position: fixed;
+    background: url(src/assets/grass.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     padding-bottom: 3em; }
   body .row {
     width: 100%;
@@ -31,44 +61,118 @@ body {
     align-items: center; }
   body .counter-container {
     width: 100%;
-    border: 1px solid blue;
     height: 3em;
     display: flex;
-    justify-content: space-between; }
+    justify-content: space-between;
+    align-items: center; }
   body .mole {
+    position: relative;
+    cursor: pointer;
     height: 5em;
-    width: 3em;
+    width: 4em;
     border-radius: 20px 20px 2px 2px;
-    background: brown;
-    bottom: -5em;
-    transform: translateY(5em); }
-
-@keyframes flicker {
-  0% {
-    bottom: 0; }
-  50% {
-    bottom: 5em;
-    transform: translateY(0); }
-  100% {
-    bottom: 0em;
-    transform: translateY(5em); } }
+    background: #C66B35;
+    transform: translateY(4em);
+    transition: transform var(--animation-time) ease-in-out; }
+  body .leftEye {
+    height: 1.75em;
+    width: 1.25em;
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    left: 0.75em;
+    top: 0.5em; }
+  body .rightEye {
+    height: 1.75em;
+    width: 1.25em;
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    right: 0.75em;
+    top: 0.5em; }
+  body .leftPupil {
+    height: 1em;
+    width: 0.75em;
+    background: #000;
+    border-radius: 50%;
+    position: absolute;
+    left: 0.95em;
+    top: 1em; }
+  body .rightPupil {
+    height: 1em;
+    width: 0.75em;
+    background: #000;
+    border-radius: 50%;
+    position: absolute;
+    right: 0.95em;
+    top: 1em; }
+  body .mouth {
+    height: 0.3em;
+    width: 2.5em;
+    border-radius: 50%;
+    border: 1px solid #000;
+    position: absolute;
+    background: red;
+    left: 0.75em;
+    bottom: 1.9em;
+    transform: skew(55deg); }
   body .active-mole {
     border-radius: 20px 20px 2px 2px;
     height: 5em;
-    width: 3em;
-    background: red;
-    animation: flicker var(--animation-time) ease-in-out; }
+    width: 4em;
+    bottom: 0;
+    transform: translateY(0em);
+    transition: transform var(--animation-time) ease-in-out; }
   body .mole-hit {
-    background: orange !important; }
-  body .mole-hidden {
-    border-radius: 20px 20px 2px 2px;
+    background: orange; }
+  body .scoreBar {
+    background: url(src/assets/dirt.jpg);
+    background-repeat: repeat-x;
+    background-size: contain;
+    position: absolute;
+    bottom: 0;
     height: 5em;
-    width: 3em;
-    bottom: -2em;
-    background: red;
-    bottom: -5em;
-    transform: translateY(5em);
-    transition: all 1s ease; }
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  body .timeContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  body .scoreContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 2px solid black;
+    padding-left: 1em;
+    margin-left: 1em; }
+  body .longGrass {
+    background: url(src/assets/grass-vector.png);
+    height: 5em;
+    width: 100%;
+    z-index: 100;
+    margin-top: -3em;
+    position: absolute;
+    top: -2em;
+    background-repeat: repeat-x;
+    background-size: contain; }
+  body .scoreboard {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #BB111B;
+    font-size: 1.1em; }
+  body .scoreTitle {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #fff;
+    font-size: 1.1em; }
+  body .timeTitle {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #fff;
+    font-size: 1.1em; }
+  body .counter {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #F8D203;
+    font-size: 1.1em; }
 
 
 /*# sourceMappingURL=bundle.css.map*/
