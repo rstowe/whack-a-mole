@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap');
+
 :root {
   --animation-time: 2s;
 }
@@ -6,15 +8,35 @@ body {
   padding: 0;
   margin: 0;
 
+  h2 {
+    font-family: 'Rubik Mono One', sans-serif;
+  }
+
+  button {
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 0.8em;
+    height: 2em;
+    width: 8em;
+    cursor: pointer;
+    margin-right: 1em;
+    padding-top: 2px;
+    border-radius: 3px;
+    border: 1px solid green;
+  }
+
   .grid {
     width: 100%;
-    background-color: #048541;
-    border: 1px solid green;
+    cursor: url('https://cdn.pixabay.com/photo/2014/03/25/16/56/sniper-297661_960_720.png'), auto;
+    background: url('../assets/grass.jpg');
+    background-size: cover;
+
+    // background-color: #048541;
     padding-bottom: 3em;
   }
 
   .row {
     width: 100%;
+    // border: 1px solid blue;
     display: flex;
     overflow: hidden;
     justify-content: space-around;
@@ -31,6 +53,7 @@ body {
   .hole {
     width: 9em;
     height: 3em;
+    // border: 1px solid brown;
     border-radius: 50%;
     background: #000;
     position: relative;
@@ -42,41 +65,33 @@ body {
 
   .counter-container {
     width: 100%;
-    border: 1px solid blue;
     height: 3em;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+  }
+
+  .counter {
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 0.9em;
+    margin-left: 1em;
   }
 
   .mole {
     height: 5em;
     width: 3em;
     border-radius: 20px 20px 2px 2px;
-    background: brown;
+    background: #C66B35;
     bottom: -5em;
     transform: translateY(5em);
     // position: absolute;
   }
 
-  @keyframes flicker {
-    0% {
-      bottom: 0;
-    }
-    50% {
-      bottom: 5em;
-      transform: translateY(0);
-    }
-    100% {
-      bottom: 0em;
-      transform: translateY(5em);
-    }
-  }
-
   .active-mole {
     border-radius: 20px 20px 2px 2px;
     height: 5em;
-    width: 3em;
-    background: red;
+    width: 4em;
+    // background: red;
     // bottom: 0;
     // transform: translateY(0);
     // transition: all 1s ease;
@@ -99,4 +114,17 @@ body {
     transition: all 1s ease;
   }
 
+  @keyframes flicker {
+    0% {
+      bottom: 0;
+    }
+    50% {
+      bottom: 5em;
+      transform: translateY(0);
+    }
+    100% {
+      bottom: 0em;
+      transform: translateY(5em);
+    }
+  }
 }

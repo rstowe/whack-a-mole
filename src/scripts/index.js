@@ -9,6 +9,7 @@ class App {
 
     this.counter = document.createElement('div');
     this.counter.innerText = this.state.counterValue;
+    this.counter.classList.add('counter');
     this.render();
   }
 
@@ -68,7 +69,7 @@ class App {
   renderStartButton() {
     let buttonContainer = document.createElement('div');
     let startButton = document.createElement('button');
-    startButton.innerText = "start";
+    startButton.innerText = "START";
 
     startButton.addEventListener('click', (event) => {
       let { isStarted } = this.state;
@@ -91,11 +92,14 @@ class App {
 
   renderCounter() {
     const startButton = this.renderStartButton();
+    const title = document.createElement('h2');
+    title.innerText = 'Whack-A-Mole';
 
     this.counterContainer = document.createElement('div');
 
     this.counterContainer.classList.add("counter-container");
     this.counterContainer.appendChild(this.counter);
+    this.counterContainer.appendChild(title);
     this.counterContainer.appendChild(startButton)
     return this.counterContainer;
   }
