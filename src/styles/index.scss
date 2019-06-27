@@ -1,0 +1,102 @@
+:root {
+  --animation-time: 2s;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+
+  .grid {
+    width: 100%;
+    background-color: #048541;
+    border: 1px solid green;
+    padding-bottom: 3em;
+  }
+
+  .row {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    justify-content: space-around;
+  }
+
+  .tile {
+    height: 7em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .hole {
+    width: 9em;
+    height: 3em;
+    border-radius: 50%;
+    background: #000;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // overflow: hidden;
+  }
+
+  .counter-container {
+    width: 100%;
+    border: 1px solid blue;
+    height: 3em;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .mole {
+    height: 5em;
+    width: 3em;
+    border-radius: 20px 20px 2px 2px;
+    background: brown;
+    bottom: -5em;
+    transform: translateY(5em);
+    // position: absolute;
+  }
+
+  @keyframes flicker {
+    0% {
+      bottom: 0;
+    }
+    50% {
+      bottom: 5em;
+      transform: translateY(0);
+    }
+    100% {
+      bottom: 0em;
+      transform: translateY(5em);
+    }
+  }
+
+  .active-mole {
+    border-radius: 20px 20px 2px 2px;
+    height: 5em;
+    width: 3em;
+    background: red;
+    // bottom: 0;
+    // transform: translateY(0);
+    // transition: all 1s ease;
+    animation: flicker var(--animation-time) ease-in-out;
+    // animation-duration: $randomNumber + ms;
+  }
+
+  .mole-hit {
+    background: orange !important;
+  }
+
+  .mole-hidden {
+    border-radius: 20px 20px 2px 2px;
+    height: 5em;
+    width: 3em;
+    bottom: -2em;
+    background: red;
+    bottom: -5em;
+    transform: translateY(5em);
+    transition: all 1s ease;
+  }
+
+}
