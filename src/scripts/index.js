@@ -7,7 +7,7 @@ class App {
       counterValue: 30,
       activeMole: null,
       score: 0,
-    }
+    };
 
     this.counter = document.createElement('div');
     this.scoreboard = document.createElement('div');
@@ -25,7 +25,7 @@ class App {
     this.resetButton.classList.add('danger');
     this.resetButton.classList.add('hidden');
     this.scoreboard.innerText = this.state.score;
-    this.scoreboard.classList.add('scoreboard')
+    this.scoreboard.classList.add('scoreboard');
     this.counter.innerText = this.state.counterValue;
     this.counter.classList.add('counter');
   }
@@ -43,12 +43,12 @@ class App {
       mole.style.setProperty('--animation-time', animationDuration + 'ms');
       mole.classList.add('active-mole');
 
-      this.state.activeMole = nextActiveMole
+      this.state.activeMole = nextActiveMole;
 
       setTimeout(() => {
         mole.classList.remove('active-mole');
-      }, animationDuration)
-    }, 1000)
+      }, animationDuration);
+    }, 1000);
   }
 
   startCounter(initialValue) {
@@ -109,11 +109,11 @@ class App {
         this.startButton.classList.remove('success');
         this.state.isStarted = true;
       }
-    })
+    });
 
     this.resetButton.addEventListener('click', () => {
       this.resetGame();
-    })
+    });
 
     buttonContainer.appendChild(this.startButton);
     buttonContainer.appendChild(this.resetButton);
@@ -135,15 +135,21 @@ class App {
   }
 
   hitMole(moleHit) {
-    const mole = moleHit.srcElement;
+    let mole = moleHit.srcElement;
+    let parent = moleHit.target.offsetParent.className;
+    let target = parent === "mole" || parent === "mole mole-hit" ?
+      moleHit.target.offsetParent :
+      mole;
+
+    var test = moleHit.target.offsetParent;
 
     this.scoreboard.innerText = this.state.score + 10;
     this.state.score = this.state.score + 10;
-    mole.classList.add('mole-hit');
+    target.classList.add('mole-hit');
 
     setTimeout(() => {
-      mole.classList.remove('mole-hit');
-    }, 200)
+      target.classList.remove('mole-hit');
+    }, 200);
   }
 
   createTile(tileId) {
@@ -154,28 +160,35 @@ class App {
     hole.classList.add('hole');
 
     let mole = document.createElement('div');
+    let leftEye = document.createElement('div');
+    let rightEye = document.createElement('div');
+    let mouth = document.createElement('div');
+    let leftPupil = document.createElement('div');
+    let rightPupil = document.createElement('div');
+
+    leftEye.classList.add('leftEye');
+    rightEye.classList.add('rightEye');
+    mouth.classList.add('mouth');
+    leftPupil.classList.add('leftPupil');
+    rightPupil.classList.add('rightPupil');
+
     mole.classList.add(`mole`);
     mole.setAttribute("id", `mole_${tileId}`);
     mole.addEventListener('click', (event) => {
-      console.log('event', event);
       const moleHit = event;
       this.hitMole(moleHit);
-    })
+    });
+
+    mole.appendChild(leftEye);
+    mole.appendChild(rightEye);
+    mole.appendChild(mouth);
+    mole.appendChild(leftPupil);
+    mole.appendChild(rightPupil);
 
     hole.appendChild(mole);
     tile.appendChild(hole);
 
     return tile;
-    // tile.innerHTML = `
-    //   <div class="tile">
-    //     <div class="hole">
-    //       <div class="mole" id="mole_${tileId}">
-    //       </div>
-    //     </div>
-    //   </div>
-    // `
-    //
-    // return tile;
   }
 
   renderGrid() {
@@ -183,7 +196,7 @@ class App {
       { tiles: [{ id: 1 }, { id: 2 }, { id: 3 }] },
       { tiles: [{ id: 4 }, { id: 5 }, { id: 6 }] },
       { tiles: [{ id: 7 }, { id: 8 }, { id: 9 }] },
-    ]
+    ];
 
     let grid = document.createElement('div');
     grid.classList.add("grid");
@@ -196,8 +209,8 @@ class App {
       row.tiles.forEach(tile => {
         let tileElement = this.createTile(tile.id);
         rowElement.appendChild(tileElement);
-      })
-    })
+      });
+    });
 
     return grid;
   }
@@ -217,6 +230,7 @@ class App {
     scoreTitle.classList.add('scoreTitle');
     timeTitle.classList.add('timeTitle');
     scoreBar.classList.add("scoreBar");
+    longGrass.classList.add("longGrass");
 
     scoreContainer.appendChild(scoreTitle);
     scoreContainer.appendChild(this.scoreboard);
@@ -224,12 +238,9 @@ class App {
     timeContainer.appendChild(timeTitle);
     timeContainer.appendChild(this.counter);
 
-    longGrass.classList.add("longGrass");
     scoreBar.appendChild(longGrass);
     scoreBar.appendChild(timeContainer);
-    scoreBar.appendChild(scoreContainer)
-    // scoreBar.appendChild(scoreTitle);
-    // scoreBar.appendChild(this.scoreboard);
+    scoreBar.appendChild(scoreContainer);
 
     return scoreBar;
   }
