@@ -9,8 +9,8 @@ class App {
       score: 0,
     }
 
-    this.scoreboard = document.createElement('div');
     this.counter = document.createElement('div');
+    this.scoreboard = document.createElement('div');
     this.startButton = document.createElement('button');
     this.resetButton = document.createElement('button');
 
@@ -20,8 +20,12 @@ class App {
 
   init() {
     this.startButton.innerText = "START";
+    this.startButton.classList.add('success');
     this.resetButton.innerText = "RESET";
+    this.resetButton.classList.add('danger');
+    this.resetButton.classList.add('hidden');
     this.scoreboard.innerText = this.state.score;
+    this.scoreboard.classList.add('scoreboard')
     this.counter.innerText = this.state.counterValue;
     this.counter.classList.add('counter');
   }
@@ -48,34 +52,42 @@ class App {
   }
 
   startCounter(initialValue) {
-    let { counterValue } = this.state;
-
-    if (initialValue) counterValue = initialValue;
-
     this.timeInterval = setInterval(() => {
-      if (counterValue === 0) {
-        this.counter.innerText = counterValue--;
+      if (this.state.counterValue === 0) {
+        let minusOne = this.state.counterValue--;
+        this.counter.innerText = minusOne;
+        this.startButton.classList.add('hidden');
         this.stop();
       } else {
-        this.counter.innerText = counterValue--;
+        let minusOne = this.state.counterValue--;
+        this.counter.innerText = minusOne;
       }
     }, 1000);
   }
 
   start(initialValue) {
+    this.resetButton.classList.add('hidden');
     this.startMoleAppear();
     this.startCounter(initialValue);
   }
 
   resetGame() {
+    this.state.counterValue = 30;
+    this.counter.innerText = 30;
+    this.scoreboard.innerText = 0;
     this.startButton.innerText = "START";
+    this.startButton.classList.remove('hidden');
     this.state.isStarted = false;
   }
 
   stop() {
     if (this.timeInterval) clearInterval(this.timeInterval);
     if (this.moleInterval) clearInterval(this.moleInterval);
-    this.resetGame();
+    this.resetButton.classList.remove('hidden');
+    this.startButton.innerText = "START";
+    this.startButton.classList.add('success');
+    this.startButton.classList.remove('danger');
+    this.state.isStarted = false;
   }
 
   renderControls() {
@@ -87,12 +99,20 @@ class App {
       if (isStarted) {
         this.stop();
         this.startButton.innerText = "START";
+        this.startButton.classList.add('success');
+        this.startButton.classList.remove('danger');
         this.state.isStarted = false;
       } else {
         this.start();
         this.startButton.innerText = "STOP";
+        this.startButton.classList.add('danger');
+        this.startButton.classList.remove('success');
         this.state.isStarted = true;
       }
+    })
+
+    this.resetButton.addEventListener('click', () => {
+      this.resetGame();
     })
 
     buttonContainer.appendChild(this.startButton);
@@ -101,29 +121,26 @@ class App {
     return buttonContainer;
   }
 
-  renderCounter() {
+  renderTopBar() {
     const controls = this.renderControls();
     const title = document.createElement('h2');
 
     title.innerText = 'Whack-A-Mole';
     this.counterContainer = document.createElement('div');
     this.counterContainer.classList.add("counter-container");
-    this.counterContainer.appendChild(this.counter);
     this.counterContainer.appendChild(title);
     this.counterContainer.appendChild(controls);
-    this.counterContainer.appendChild(this.scoreboard);
 
     return this.counterContainer;
   }
 
   hitMole(moleHit) {
     const mole = moleHit.srcElement;
-    console.log('you hit', moleHit.target);
 
     this.scoreboard.innerText = this.state.score + 10;
     this.state.score = this.state.score + 10;
     mole.classList.add('mole-hit');
-    console.log('this.state.score', this.state.score);
+
     setTimeout(() => {
       mole.classList.remove('mole-hit');
     }, 200)
@@ -185,13 +202,47 @@ class App {
     return grid;
   }
 
+  renderScoreBar() {
+    let scoreBar = document.createElement('div');
+    let scoreContainer = document.createElement('div');
+    let scoreTitle = document.createElement('div');
+    let longGrass = document.createElement('div');
+    let timeContainer = document.createElement('div');
+    let timeTitle = document.createElement('div');
+
+    scoreTitle.innerText = "Score:";
+    timeTitle.innerText = "Time:";
+    scoreContainer.classList.add('scoreContainer');
+    timeContainer.classList.add('timeContainer');
+    scoreTitle.classList.add('scoreTitle');
+    timeTitle.classList.add('timeTitle');
+    scoreBar.classList.add("scoreBar");
+
+    scoreContainer.appendChild(scoreTitle);
+    scoreContainer.appendChild(this.scoreboard);
+
+    timeContainer.appendChild(timeTitle);
+    timeContainer.appendChild(this.counter);
+
+    longGrass.classList.add("longGrass");
+    scoreBar.appendChild(longGrass);
+    scoreBar.appendChild(timeContainer);
+    scoreBar.appendChild(scoreContainer)
+    // scoreBar.appendChild(scoreTitle);
+    // scoreBar.appendChild(this.scoreboard);
+
+    return scoreBar;
+  }
+
   render() {
     const root = document.getElementById('app');
-    const counter = this.renderCounter();
+    const topBar = this.renderTopBar();
     const grid = this.renderGrid();
+    const scoreBar = this.renderScoreBar();
 
-    root.appendChild(counter);
+    root.appendChild(topBar);
     root.appendChild(grid);
+    root.appendChild(scoreBar);
   }
 }
 

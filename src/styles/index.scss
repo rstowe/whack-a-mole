@@ -5,11 +5,14 @@
 }
 
 body {
+  height: 100%;
+  width: 100%;
   padding: 0;
   margin: 0;
 
   h2 {
     font-family: 'Rubik Mono One', sans-serif;
+    margin-left: 1em;
   }
 
   button {
@@ -21,6 +24,9 @@ body {
     margin-right: 1em;
     padding-top: 2px;
     border-radius: 3px;
+  }
+
+  button.success {
     border: 2px solid #28a745;
     &:hover {
       background: #28a745;
@@ -28,19 +34,30 @@ body {
     }
   }
 
-  .grid {
-    width: 100%;
-    cursor: url('https://cdn.pixabay.com/photo/2014/03/25/16/56/sniper-297661_960_720.png'), auto;
-    background: url('../assets/grass.jpg');
-    background-size: cover;
+  button.danger {
+    border: 2px solid #dc3545;
+    &:hover {
+      background: #dc3545;
+      color: #fff;
+    }
+  }
 
-    // background-color: #048541;
+  .hidden {
+    display: none;
+  }
+
+  .grid {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background: url('../assets/grass.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     padding-bottom: 3em;
   }
 
   .row {
     width: 100%;
-    // border: 1px solid blue;
     display: flex;
     overflow: hidden;
     justify-content: space-around;
@@ -57,14 +74,12 @@ body {
   .hole {
     width: 9em;
     height: 3em;
-    // border: 1px solid brown;
     border-radius: 50%;
     background: #000;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    // overflow: hidden;
   }
 
   .counter-container {
@@ -75,21 +90,14 @@ body {
     align-items: center;
   }
 
-  .counter {
-    font-family: 'Rubik Mono One', sans-serif;
-    font-size: 0.9em;
-    margin-left: 1em;
-  }
-
   .mole {
+    cursor: pointer;
     height: 5em;
     width: 4em;
     border-radius: 20px 20px 2px 2px;
     background: #C66B35;
-    // bottom: -5em;
     transform: translateY(4em);
     transition: transform var(--animation-time) ease-in-out;
-    // position: absolute;
   }
 
   .active-mole {
@@ -98,19 +106,74 @@ body {
     width: 4em;
     bottom: 0;
     transform: translateY(0em);
-    // transition: all var(--animation-time) ease-in-out;
     transition: transform var(--animation-time) ease-in-out;
-
-    // background: red;
-    // bottom: 0;
-    // transform: translateY(0);
-    // transition: all 1s ease;
-    // animation: flicker var(--animation-time) ease-in-out;
-    // animation-duration: var(--animation-time);
   }
 
   .mole-hit {
-    background: orange !important;
+    background: orange;
   }
 
+  .scoreBar {
+    background: url('../assets/dirt.jpg');
+    background-repeat: repeat-x;
+    background-size: contain;
+    position: absolute;
+    bottom: 0;
+    height: 5em;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .timeContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .scoreContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-left: 2px solid black;
+    padding-left: 1em;
+    margin-left: 1em;
+  }
+
+  .longGrass {
+    background: url('../assets/grass-vector.png');
+    height: 5em;
+    width: 100%;
+    z-index: 100;
+    margin-top: -3em;
+    position: absolute;
+    top: -2em;
+    background-repeat: repeat-x;
+    background-size: contain;
+  }
+
+  .scoreboard {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #BB111B;
+    font-size: 1.1em;
+  }
+
+  .scoreTitle {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #fff;
+    font-size: 1.1em;
+  }
+
+  .timeTitle {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #fff;
+    font-size: 1.1em;
+  }
+
+  .counter {
+    font-family: 'Rubik Mono One', sans-serif;
+    color: #F8D203;
+    font-size: 1.1em;
+  }
 }
